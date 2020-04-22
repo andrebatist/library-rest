@@ -1,7 +1,5 @@
 package ru.aplaksin.libraryrest.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,8 +23,7 @@ public class Author {
     private String firstName;
     private String middleName;
     private String fullName;
-   // private String fullName = String.format("%s %s %s",this.lastName,this.firstName,this.middleName);
-   // @JsonBackReference
+
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Book> books = new ArrayList<>();
 }
