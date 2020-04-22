@@ -37,19 +37,15 @@ public class BookController {
 
     @PostMapping(value = {"/","/{authId}"})
     public ResponseEntity<BookDto> addBook(@RequestBody BookDto bookDto,
-                                        @PathVariable(required = false) Long authId) throws BadDtoException, ResourceNotFoundException {
-        if (!BookDto.validDto(bookDto)) throw new BadDtoException("BookDto data is inconsistent");
-        if (authId != null && !authorService.validateAuthorId(authId))
-            throw new ResourceNotFoundException(String.format("Author not found with this id : %s", authId));
+                                        @PathVariable(required = false) Long authId) throws Exception {
+        validateReqData(bookDto,authId);
         return new ResponseEntity<>(bookService.addBook(bookDto,authId), HttpStatus.OK);
     }
 
     @PutMapping(value = {"/{id}","/{id}/{authId}"})
     public ResponseEntity<BookDto> editBook(@RequestBody BookDto bookDto, @PathVariable Long id,
-                                         @PathVariable(required = false) Long authId) throws BadDtoException, ResourceNotFoundException {
-        if (!BookDto.validDto(bookDto)) throw new BadDtoException("BookDto data is inconsistent");
-        if (authId != null && !authorService.validateAuthorId(authId))
-            throw new ResourceNotFoundException(String.format("Author not found with this id : %s", authId));
+                                         @PathVariable(required = false) Long authId) throws Exception {
+        validateReqData(bookDto,authId);
         BookDto res = bookService.editBook(id, bookDto, authId);
         if (res == null) throw new ResourceNotFoundException(String.format("Book not found with this id : %s", id));
         return new ResponseEntity<>(res, HttpStatus.OK);
@@ -67,6 +63,12 @@ public class BookController {
         AuthorDto authorDto = bookService.getAuthorByBookId(id);
         if (authorDto == null) throw new ResourceNotFoundException(String.format("Author not found for this book id : %s",id));
         return new ResponseEntity<>(authorDto, HttpStatus.OK);
+    }
+
+    private void validateReqData(BookDto bookDto,Long authId) throws Exception {
+        if (!BookDto.validDto(bookDto)) throw new BadDtoException("BookDto data is inconsistent");
+        if (authId != null && !authorService.validateAuthorId(authId))
+            throw new ResourceNotFoundException(String.format("Author not found with this id : %s", authId));
     }
 
 }

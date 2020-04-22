@@ -1,0 +1,53 @@
+Примеры запросов:
+
+Body Application-JSON raw
+
+POST http://localhost:9090/book/
+{
+	"name": "War of the Worlds",
+	"pages": "432",
+	"published": "1889"
+}
+----------------------------------------
+POST http://localhost:9090/author/
+{
+    "lastName": "Pushkin",
+    "firstName": "Aleksander",
+    "middleName": "Sergeevich",
+    "fullName": "Pushkin Aleksandr Sergeevich"
+}
+---------------------------------------
+POST http://localhost:9090/book/2
+{
+	"name": "Anna Karenina",
+	"pages": "320",
+	"published": "1856"
+}
+-------------------------------------
+POST http://localhost:9090/author/
+{
+    "lastName": "Tolstoy",
+    "firstName": "Lev",
+    "middleName": "Nicolaevich",
+    "fullName": "Tolstoy Lev Nicolayevich",
+    "bookIds": [
+    	1,
+        2
+    ] 
+}
+------------------------------------
+GET http://localhost:9090/book/all
+-----------------------------------
+GET http://localhost:9090/book/1
+----------------------------------
+PUT http://localhost:9090/book/2/3
+{	
+	"name": "Anna Karenina",
+	"pages": "320",
+	"published": "1856"
+}
+--------------------------------
+DELETE http://localhost:9090/book/2
+--------------------------------
+GET http://localhost:9090/book/author/2
+

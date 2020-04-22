@@ -1,7 +1,6 @@
 package ru.aplaksin.libraryrest.service;
 
 import org.springframework.stereotype.Service;
-import ru.aplaksin.libraryrest.model.Author;
 import ru.aplaksin.libraryrest.model.Book;
 import ru.aplaksin.libraryrest.model.dto.AuthorDto;
 import ru.aplaksin.libraryrest.model.dto.BookDto;
@@ -11,7 +10,6 @@ import ru.aplaksin.libraryrest.repository.BookRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.aplaksin.libraryrest.model.dto.BookDto.*;
 
 @Service
 public class BookService {
@@ -62,7 +60,7 @@ public class BookService {
 
     public AuthorDto getAuthorByBookId(Long id) {
         Book book = bookRepository.findById(id).orElse(null);
-        if (book==null || book.getAuthor()==null) return null;
+        if (book==null || book.getAuthor() == null) return null;
         return BookDto.toDto(book, false).getAuthorDto();
     }
 
